@@ -1,0 +1,1 @@
+ALTER TABLE `ezpublish`.`ezrss_export` ADD COLUMN `language` VARCHAR(45) NULL  AFTER `url` ;
