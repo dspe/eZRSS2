@@ -26,6 +26,7 @@
 //
 //
 
+print_r("im here !");
 $Module = $Params['Module'];
 
 require_once( "kernel/common/template.php" );
@@ -40,11 +41,17 @@ if ( $http->hasPostVariable( 'RSSImport_ID' ) )
     $rssImportID = $http->postVariable( 'RSSImport_ID' );
 }
 
+if ( $http->hasPostVariable( 'importLanguage' ) ) {
+	$RSSLanguage = $http->postVariable( 'importLanguage' );
+} else {
+	$RSSLanguage = "eng-GB";
+}
+
 // Check if valid RSS ID //
 if ( !is_numeric( $rssImportID ) )
 {
     // Create default rssImport object to use
-    $rssImport = eZRSS2Import::create();
+    $rssImport = eZRSS2Import::create(false, $RSSLanguage );
     $rssImport->store();
     $rssImportID = $rssImport->attribute( 'id' );
 }
@@ -94,19 +101,19 @@ if ( $Module->isCurrentAction( 'AnalyzeFeed' ) ||
 else if ( $Module->isCurrentAction( 'Store' ) )
 {
     storeRSSImport( $rssImport, $http, true );
-    return $Module->redirectTo( '/rss/list' );
+    return $Module->redirectTo( '/rss2/list' );
 }
 else if ( $Module->isCurrentAction( 'Cancel' ) )
 {
     $rssImport->remove();
-    return $Module->redirectTo( '/rss/list' );
+    return $Module->redirectTo( '/rss2/list' );
 }
 else if ( $Module->isCurrentAction( 'BrowseDestination' ) )
 {
     storeRSSImport( $rssImport, $http );
     return eZContentBrowse::browse( array( 'action_name' => 'RSSObjectBrowse',
                                            'description_template' => 'design:rss/browse_destination.tpl',
-                                           'from_page' => '/rss/edit_import/'.$rssImportID.'/destination' ),
+                                           'from_page' => '/rss2/edit_import/'.$rssImportID.'/destination' ),
                                     $Module );
 }
 else if ( $Module->isCurrentAction( 'BrowseUser' ) )
@@ -114,7 +121,7 @@ else if ( $Module->isCurrentAction( 'BrowseUser' ) )
     storeRSSImport( $rssImport, $http );
     return eZContentBrowse::browse( array( 'action_name' => 'RSSUserBrowse',
                                            'description_template' => 'design:rss/browse_user.tpl',
-                                           'from_page' => '/rss/edit_import/'.$rssImportID.'/user' ),
+                                           'from_page' => '/rss2/edit_import/'.$rssImportID.'/user' ),
                                     $Module );
 }
 
@@ -147,6 +154,8 @@ if ( isset( $Params['BrowseType'] ) )
 
 $tpl = templateInit();
 
+$tpl->setVariable( 'languageAvailable', eZContentLanguage::fetchList()); 
+
 // Get classes and class attributes
 $classArray = eZContentClass::fetchList();
 
@@ -173,6 +182,10 @@ function storeRSSImport( $rssImport, $http, $publish = false )
     if ( $http->hasPostVariable( 'Class_ID' ) )
     {
         $rssImport->setAttribute( 'class_id', $http->postVariable( 'Class_ID' ) );
+    }
+    
+    if( $http->hasPostVariable( 'importLanguage' ) ) {
+    	$rssImport->setAttribute( 'language', $http->postVariable( 'importLanguage') );	
     }
 
     $importDescription = $rssImport->importDescription();

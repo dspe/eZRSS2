@@ -83,7 +83,7 @@
 
 
 {* Import window. *}
-<form name="rssimportslist" method="post" action={'rss/list'|ezurl}>
+<form name="rssimportslist" method="post" action={'rss2/list'|ezurl}>
 
 <div class="context-block">
 
@@ -104,6 +104,7 @@
     <th>{'Name'|i18n( 'design/admin/rss/list' )}</th>
     <th>{'Status'|i18n( 'design/admin/rss/list' )}</th>
     <th>{'Modifier'|i18n( 'design/admin/rss/list' )}</th>
+    <th>{'Language'|i18n( 'design/admin/rss/list' )}</th>
     <th>{'Modified'|i18n( 'design/admin/rss/list' )}</th>
     <th class="tight">&nbsp;</th>
 </tr>
@@ -122,11 +123,14 @@
     {* Modifier. *}
     <td><a href={$RSSImports.item.modifier.contentobject.main_node.url_alias|ezurl}>{$RSSImports.item.modifier.contentobject.name|wash}</a></td>
 
+	{* Language *}
+	<td>{$RSSImports.item.language}</td>
+	
     {* Modified. *}
     <td>{$RSSImports.item.modified|l10n( shortdatetime )}</td>
 
     {* Edit. *}
-    <td><a href={concat( 'rss/edit_import/', $RSSImports.item.id )|ezurl}><img class="button" src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'design/admin/rss/list' )}" title="{'Edit the <%name> RSS import.'|i18n('design/admin/rss/list',, hash( '%name', $RSSImports.item.name) )|wash }" /></a></td>
+    <td><a href={concat( 'rss2/edit_import/', $RSSImports.item.id )|ezurl}><img class="button" src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'design/admin/rss/list' )}" title="{'Edit the <%name> RSS import.'|i18n('design/admin/rss/list',, hash( '%name', $RSSImports.item.name) )|wash }" /></a></td>
 
 </tr>
 {/section}

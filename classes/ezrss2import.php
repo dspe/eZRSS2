@@ -129,7 +129,12 @@ class eZRSS2Import extends eZPersistentObject
                                          'import_description' => array( 'name' => 'ImportDescriptionValue',
                                                                         'datatype' => 'string',
                                                                         'default' => '',
-                                                                        'required' => true ) ),
+                                                                        'required' => true ),
+										'language' => array( 'name' => 'ImportLanguage',
+        													'datatype' => 'string',
+        													'default' => '',
+        													'required' => true )
+        														),
                       "keys" => array( "id", 'status' ),
                       'function_attributes' => array( 'class_attributes' => 'classAttributes',
                                                       'destination_path' => 'destinationPath',
@@ -150,7 +155,7 @@ class eZRSS2Import extends eZPersistentObject
 
      \return the new RSS Import object
     */
-    static function create( $userID = false )
+    static function create( $userID = false, $language )
     {
         if ( $userID === false )
         {
@@ -173,7 +178,8 @@ class eZRSS2Import extends eZPersistentObject
                       'class_title' => '',
                       'class_url' => '',
                       'class_description' => '',
-                      'active' => 1 );
+                      'active' => 1,
+        				'language' => $language);
 
         return new eZRSS2Import( $row );
     }
@@ -424,15 +430,15 @@ class eZRSS2Import extends eZPersistentObject
         $ini = eZINI::instance();
         foreach( $ini->variable( 'RSSSettings', 'ActiveExtensions' ) as $activeExtension )
         {
-            if ( file_exists( eZExtension::baseDirectory() . '/' . $activeExtension . '/rss/' . $activeExtension . 'rssimport.php' ) )
+            if ( file_exists( eZExtension::baseDirectory() . '/' . $activeExtension . '/rss2/' . $activeExtension . 'rssimport.php' ) )
             {
-                include_once( eZExtension::baseDirectory() . '/' . $activeExtension . '/rss/' . $activeExtension . 'rssimport.php' );
+                include_once( eZExtension::baseDirectory() . '/' . $activeExtension . '/rss2/' . $activeExtension . 'rssimport.php' );
                 $fieldDefinition = eZRSS2Import::arrayMergeRecursive( $fieldDefinition, call_user_func( array(  $activeExtension . 'rssimport', 'rssFieldDefinition' ), array() ) );
             }
         }
 
         $returnArray = array();
-        eZRSSImport::recursiveFieldMap( $fieldDefinition, '', '', $returnArray, 0 );
+        eZRSS2Import::recursiveFieldMap( $fieldDefinition, '', '', $returnArray, 0 );
 
         return $returnArray;
     }
