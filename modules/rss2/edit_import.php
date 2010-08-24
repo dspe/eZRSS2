@@ -1,32 +1,14 @@
 <?php
-//
-// eZSetup - init part initialization
-//
-// Created on: <24-Sep-2003 13:41:54 kk>
-//
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
 
-print_r("im here !");
+/**
+ * eZRSS2 edit import
+ * @copyright Copyright (C) 2010 - Philippe VINCENT-ROYOL. All rights reserved
+ * @licence http://www.gnu.org/licenses/gpl-2.0.txt GNU GPLv2
+ * @author Philippe VINCENT-ROYOL
+ * @version @@@VERSION@@@
+ * @package ezrss2
+ */
+
 $Module = $Params['Module'];
 
 require_once( "kernel/common/template.php" );

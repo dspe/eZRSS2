@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * eZPersistentObject definition for ezrss_exportitem table
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
+ * @licence http://ez.no/licences/gnu_gpl GNU GPLv2
+ * @author Philippe VINCENT-ROYOL
+ */
+
 class eZRSS2ExportItem extends eZPersistentObject
 {
 
